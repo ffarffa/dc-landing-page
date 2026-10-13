@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { CONTACT_EMAIL, engagements, principles, services, stack, steps, type IconName } from './content'
+import { CONTACT_EMAIL, LEGAL_NAME, SSM_NO, audiences, engagements, principles, services, stack, steps, useCases, type IconName } from './content'
 
 const year = new Date().getFullYear()
 const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Project enquiry')}`
@@ -34,7 +34,9 @@ export default function App() {
       <main>
         <Hero />
         <Stack />
+        <Audiences />
         <Services />
+        <UseCases />
         <Process />
         <Engagements />
         <Principles />
@@ -72,10 +74,10 @@ function Nav() {
         <Logo />
         <nav aria-label="Main">
           <a href="#services">Services</a>
+          <a href="#use-cases">Use cases</a>
           <a href="#process">Process</a>
           <a href="#engagements">Engagements</a>
-          <a href="#principles">Principles</a>
-        </nav>
+                  </nav>
         <a className="btn btn-small" href="#contact">Talk to us</a>
       </div>
     </header>
@@ -148,7 +150,7 @@ function Hero() {
           </p>
           <div className="cta-row" data-reveal>
             <a className="btn" href="#contact">Start a project <Arrow /></a>
-            <a className="btn btn-ghost" href="#services">See what we do</a>
+            <a className="btn btn-ghost" href="#use-cases">See use cases</a>
           </div>
         </div>
         <div className="hero-visual" data-reveal>
@@ -185,11 +187,74 @@ function SectionHead({ num, kicker, title, children }: { num: string; kicker: st
   )
 }
 
+function Audiences() {
+  return (
+    <section className="section" id="who">
+      <div className="wrap">
+        <SectionHead num="01" kicker="Who we help" title={<>Built for businesses that <em>run on software.</em></>}>
+          You do not need an infrastructure team. You need your systems to stay up, stay secure and keep up with growth.
+        </SectionHead>
+        <div className="audiences">
+          {audiences.map((a, i) => (
+            <article key={a.who} className="audience" data-reveal style={{ transitionDelay: `${i * 80}ms` }}>
+              <h3>{a.who}</h3>
+              <p>{a.body}</p>
+              <p className="need"><span>They need</span>{a.need}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function UseCases() {
+  const [active, setActive] = useState(0)
+  const u = useCases[active]
+  return (
+    <section className="section" id="use-cases">
+      <div className="wrap">
+        <SectionHead num="03" kicker="Use cases" title={<>Problems we <em>solve.</em></>}>
+          Recognise one of these? Each is a typical engagement: what we find, what we do, and what you get.
+        </SectionHead>
+        <div className="uc" data-reveal>
+          <div className="uc-list" role="tablist" aria-label="Use cases">
+            {useCases.map((c, i) => (
+              <button
+                key={c.title}
+                role="tab"
+                id={`uc-tab-${i}`}
+                aria-selected={i === active}
+                aria-controls="uc-panel"
+                className={i === active ? 'on' : ''}
+                onClick={() => setActive(i)}
+              >
+                <span className="uc-sector">{c.sector}</span>
+                <span className="uc-title">{c.title}</span>
+              </button>
+            ))}
+          </div>
+          <div className="uc-panel" id="uc-panel" role="tabpanel" aria-labelledby={`uc-tab-${active}`} key={active}>
+            <p className="mono-label">{u.sector}</p>
+            <h3>{u.title}</h3>
+            <dl>
+              <div><dt>The problem</dt><dd>{u.problem}</dd></div>
+              <div><dt>What we do</dt><dd>{u.approach}</dd></div>
+              <div className="res"><dt>What you get</dt><dd>{u.result}</dd></div>
+            </dl>
+            <a className="btn" href="#contact">This sounds like us <Arrow /></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function Services() {
   return (
-    <section className="section" id="services">
+    <section className="section alt" id="services">
       <div className="wrap">
-        <SectionHead num="01" kicker="Services" title={<>Everything under the application, <em>handled.</em></>}>
+        <SectionHead num="02" kicker="Services" title={<>Everything under the application, <em>handled.</em></>}>
           From a single database to a multi-region platform. Bring us the system you have, or the one you need.
         </SectionHead>
         <div className="cards">
@@ -214,9 +279,9 @@ function Services() {
 
 function Process() {
   return (
-    <section className="section alt" id="process">
+    <section className="section" id="process">
       <div className="wrap">
-        <SectionHead num="02" kicker="Process" title={<>No surprises, <em>by design.</em></>}>
+        <SectionHead num="04" kicker="Process" title={<>No surprises, <em>by design.</em></>}>
           Four steps, written down and agreed with you before anything touches production.
         </SectionHead>
         <ol className="steps">
@@ -235,9 +300,9 @@ function Process() {
 
 function Engagements() {
   return (
-    <section className="section" id="engagements">
+    <section className="section alt" id="engagements">
       <div className="wrap">
-        <SectionHead num="03" kicker="Engagements" title={<>Work with us <em>your way.</em></>}>
+        <SectionHead num="05" kicker="Engagements" title={<>Work with us <em>your way.</em></>}>
           Start with a project, keep us on to run it, or bring us in to review what your team builds.
         </SectionHead>
         <div className="plans">
@@ -262,7 +327,7 @@ function Principles() {
   return (
     <section className="section alt" id="principles">
       <div className="wrap principles">
-        <SectionHead num="04" kicker="Principles" title={<>How we keep systems <em>boring</em> — in the best way.</>} />
+        <SectionHead num="06" kicker="Principles" title={<>How we keep systems <em>boring</em> — in the best way.</>} />
         <dl>
           {principles.map((p, i) => (
             <div key={p.k} data-reveal style={{ transitionDelay: `${i * 70}ms` }}>
@@ -280,7 +345,7 @@ function Contact() {
   return (
     <section className="contact" id="contact">
       <div className="wrap contact-inner" data-reveal>
-        <p className="mono-label"><span className="num">05</span> Contact</p>
+        <p className="mono-label"><span className="num">07</span> Contact</p>
         <h2>Tell us what you’re <em>running.</em></h2>
         <p className="section-sub">
           A short note about your systems and what is getting in the way is enough. We will come back to you with next steps.
@@ -298,7 +363,10 @@ function Footer() {
     <footer className="footer">
       <div className="wrap footer-inner">
         <Logo />
-        <p>© {year} Destiny Cloud. Cloud, servers and databases for the enterprise. Malaysia.</p>
+        <div className="legal">
+          <p>© {year} {LEGAL_NAME} <span className="regno">({SSM_NO})</span></p>
+          <p>Registered in Malaysia under the Registration of Businesses Act 1956 · <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+        </div>
         <a href="#top">Back to top ↑</a>
       </div>
     </footer>

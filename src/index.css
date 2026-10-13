@@ -445,3 +445,68 @@ em { font-style: italic; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   [data-reveal] { opacity: 1; transform: none; }
 }
+
+/* Audiences */
+.audiences { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.audience { padding: 30px 28px; border-top: 1px solid var(--ember); background: linear-gradient(180deg, rgba(255, 122, 61, 0.06), transparent 60%); border-radius: 0 0 var(--radius) var(--radius); }
+.audience h3 { font-family: var(--serif); font-size: 32px; line-height: 1.1; }
+.audience p { margin-top: 12px; color: var(--muted); font-size: 15.5px; }
+.audience .need { margin-top: 20px; color: var(--text); font-weight: 500; }
+.audience .need span { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; font-weight: 400; }
+
+/* Use cases */
+.uc { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 24px; align-items: start; }
+.uc-list { display: grid; gap: 6px; }
+.uc-list button {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: grid;
+  gap: 2px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.uc-list button:hover { background: rgba(236, 233, 226, 0.03); }
+.uc-list button.on { background: var(--surface); border-color: var(--line-2); box-shadow: inset 3px 0 0 var(--ember); }
+.uc-list button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.uc-sector { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
+.uc-list button.on .uc-sector { color: var(--ember); }
+.uc-title { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; color: var(--muted); }
+.uc-list button.on .uc-title, .uc-list button:hover .uc-title { color: var(--text); }
+.uc-panel {
+  position: sticky;
+  top: 100px;
+  padding: 36px 34px 34px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line-2);
+  background: radial-gradient(120% 70% at 100% 0%, rgba(245, 196, 107, 0.08), transparent 55%), var(--surface);
+  animation: ucIn 0.35s ease;
+}
+@keyframes ucIn { from { opacity: 0; transform: translateY(8px); } }
+.uc-panel h3 { margin-top: 10px; font-family: var(--serif); font-size: clamp(32px, 3.6vw, 44px); line-height: 1.05; }
+.uc-panel dl { margin: 26px 0 30px; display: grid; gap: 18px; }
+.uc-panel dt { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
+.uc-panel dd { margin: 0; color: var(--muted); }
+.uc-panel .res { padding: 16px 18px; border-radius: 10px; background: var(--ember-soft); border: 1px solid rgba(255, 122, 61, 0.25); }
+.uc-panel .res dt { color: var(--ember); }
+.uc-panel .res dd { color: var(--text); font-weight: 500; }
+
+@media (max-width: 1000px) {
+  .audiences { grid-template-columns: 1fr; max-width: 640px; }
+  .uc { grid-template-columns: 1fr; }
+  .uc-list { grid-template-columns: repeat(2, 1fr); }
+  .uc-panel { position: static; }
+}
+@media (max-width: 760px) {
+  .uc-list { grid-template-columns: 1fr; }
+  .uc-list button { padding: 12px 16px; }
+  .uc-panel { padding: 26px 20px; }
+}
+
+.footer .legal { display: grid; gap: 2px; text-align: center; }
+.footer .legal p { font-size: 13px; }
+.footer .legal p:first-child { color: var(--muted); }
+.footer .regno { font-family: var(--mono); font-size: 12px; }
+.footer .legal a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
