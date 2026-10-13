@@ -1,0 +1,27 @@
+# Destiny Cloud landing page on the VPS (/opt/dc-landing-page). Self-contained: its own network and its own
+# Cloudflare tunnel, nothing shared with other stacks. No port is published; the tunnel dials out.
+services:
+  dc-web:
+    image: nginxinc/nginx-unprivileged:1.27-alpine
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 64m
+    tmpfs: [/tmp]
+    volumes:
+      - ./web:/usr/share/nginx/html:ro            # rsync dist/ here; no restart needed
+      - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+  cloudflared:
+    # Tunnel public hostname -> http://dc-web:8080. TUNNEL_TOKEN lives in its own file:
+    #   mkdir -p data && touch data/cloudflared.env && chmod 600 data/cloudflared.env
+    profiles: ["tunnel"]
+    image: ${CLOUDFLARED_IMAGE:-cloudflare/cloudflared:latest}
+    command: tunnel --no-autoupdate run
+    env_file: ./data/cloudflared.env
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    depends_on: [dc-web]
