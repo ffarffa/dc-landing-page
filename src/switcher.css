@@ -30,13 +30,17 @@
 .sw button:focus-visible { outline: 2px solid #f5c46b; outline-offset: 2px; }
 
 .sw-loading { min-height: 100vh; background: #f7f4ec; }
+.sw-loading.c { background: #080b18; }
 
 html.sw-compare-on, html.sw-compare-on body { overflow: hidden; background: #14161c; }
-.sw-compare { position: fixed; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px 8px 70px; background: #14161c; }
+.sw-compare { position: fixed; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 8px 8px 70px; background: #14161c; }
 .sw-compare figure { margin: 0; display: grid; grid-template-rows: auto 1fr; min-width: 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.12); }
 .sw-compare figcaption { padding: 8px 12px; background: #1d2028; color: rgba(255, 255, 255, 0.8); font: 600 12px/1 system-ui, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
 .sw-compare iframe { width: 100%; height: 100%; border: 0; background: #fff; }
 
+@media (max-width: 900px) {
+  .sw-compare { grid-template-columns: 1fr; grid-auto-rows: 80vh; overflow-y: auto; }
+}
 @media (max-width: 560px) {
   .sw { bottom: 12px; }
   .sw button { padding: 8px 11px; font-size: 12px; }

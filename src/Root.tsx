@@ -2,25 +2,29 @@ import { lazy, Suspense, useEffect, useState } from 'react'
 import DesignA from './App.tsx'
 import './switcher.css'
 
-// Design B is loaded only when someone picks it, so design A stays as light as before.
+// Designs B and C load only when someone picks them, so design A stays as light as before.
 const DesignB = lazy(() => import('./b/DesignB.tsx'))
+const DesignC = lazy(() => import('./c/DesignC.tsx'))
 
-type Mode = 'a' | 'b' | 'compare'
+type Mode = 'a' | 'b' | 'c' | 'compare'
 const MODES: { id: Mode; label: string }[] = [
   { id: 'a', label: 'Design A' },
   { id: 'b', label: 'Design B' },
+  { id: 'c', label: 'Design C' },
   { id: 'compare', label: 'Side by side' },
 ]
 const KEY = 'dc-design'
 const params = new URLSearchParams(window.location.search)
 const embedded = params.get('embed') === '1'
 
+const isMode = (v: string | null): v is Mode => MODES.some((m) => m.id === v)
+
 function initialMode(): Mode {
   const fromUrl = params.get('design')
-  if (fromUrl === 'a' || fromUrl === 'b' || fromUrl === 'compare') return fromUrl
+  if (isMode(fromUrl)) return fromUrl
   try {
     const saved = localStorage.getItem(KEY)
-    if (saved === 'a' || saved === 'b' || saved === 'compare') return saved
+    if (isMode(saved)) return saved
   } catch { /* storage blocked: fall back to A */ }
   return 'a'
 }
@@ -40,9 +44,9 @@ export default function Root() {
   return (
     <>
       {mode === 'a' && <DesignA />}
-      {mode === 'b' && (
-        <Suspense fallback={<div className="sw-loading" />}>
-          <DesignB />
+      {(mode === 'b' || mode === 'c') && (
+        <Suspense fallback={<div className={`sw-loading ${mode}`} />}>
+          {mode === 'b' ? <DesignB /> : <DesignC />}
         </Suspense>
       )}
       {mode === 'compare' && <Compare />}
@@ -58,7 +62,7 @@ function Compare() {
   }, [])
   return (
     <div className="sw-compare">
-      {(['a', 'b'] as const).map((d) => (
+      {(['a', 'b', 'c'] as const).map((d) => (
         <figure key={d}>
           <figcaption>Design {d.toUpperCase()}</figcaption>
           <iframe src={`/?design=${d}&embed=1`} title={`Design ${d.toUpperCase()}`} />
