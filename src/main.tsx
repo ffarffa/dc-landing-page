@@ -13,11 +13,3 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 )
 
-// Colour lab for local tuning (`npm run dev`). Vite drops this block from production builds.
-if (import.meta.env.DEV) {
-  import('./dev/ColorLab.tsx').then(({ default: ColorLab }) => {
-    const host = document.createElement('div')
-    document.body.appendChild(host)
-    createRoot(host).render(<ColorLab />)
-  })
-}
