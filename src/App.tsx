@@ -50,10 +50,11 @@ export default function App() {
 function Logo() {
   return (
     <a href="#top" className="logo" aria-label="Destiny Cloud, home">
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M6 21a10 10 0 0 1 20 0" fill="none" stroke="var(--ember)" strokeWidth="2.4" strokeLinecap="round" />
-        <circle cx="16" cy="11" r="2.6" fill="var(--gold)" />
-        <path d="M5 24h22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity=".55" />
+      {/* Symbol from the brand package (brand/assets/SVG): ember horizon arc over an ivory baseline.
+          Non-scaling strokes keep the lines crisp at nav size. */}
+      <svg viewBox="-4 40 224 52" aria-hidden="true">
+        <path d="M 18 82 Q 108 8 198 82" fill="none" stroke="var(--ember)" strokeWidth="2.2" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        <path d="M 0 88 H 216" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
       </svg>
       <span>Destiny<b>Cloud</b></span>
     </a>

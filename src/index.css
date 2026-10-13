@@ -100,10 +100,10 @@ em { font-style: italic; }
 .nav nav a { font-size: 14px; color: var(--muted); transition: color 0.2s; }
 .nav nav a:hover { color: var(--text); }
 
-.logo { display: inline-flex; align-items: center; gap: 10px; font-size: 18px; letter-spacing: -0.02em; color: var(--text); }
-.logo svg { width: 28px; height: 28px; }
-.logo b { font-weight: 600; margin-left: 1px; }
-.logo span { font-weight: 400; }
+.logo { display: inline-flex; align-items: center; gap: 12px; font-size: 18px; letter-spacing: -0.02em; color: var(--text); }
+.logo svg { width: 46px; height: 11px; overflow: visible; }
+.logo b { font-weight: 600; }
+.logo span { font-weight: 300; }
 
 /* ---------- Hero ---------- */
 .hero {

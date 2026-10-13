@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="600" viewBox="0 0 700 600"><rect width="700" height="600" fill="#0B0D10"/><g transform="translate(242 100) scale(1.0)">
+      <path d="M 18 82 Q 108 8 198 82" fill="none" stroke="#ECE9E2" stroke-width="5.5" stroke-linecap="round"/>
+      <path d="M 0 88 H 216" fill="none" stroke="#ECE9E2" stroke-width="2.6" stroke-linecap="round"/>
+    </g>
+        <text x="350" y="340" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="65" font-weight="300" letter-spacing="-2" fill="#ECE9E2">Destiny</text>
+        <text x="350" y="414" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="65" font-weight="600" letter-spacing="-2" fill="#ECE9E2">Cloud</text></svg>
