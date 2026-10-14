@@ -1,0 +1,41 @@
+{
+  "brand": "Destiny Cloud",
+  "concept": "08",
+  "small_symbol": {
+    "svg_ink": "small_symbol/svg/symbol_small_ink.svg",
+    "svg_transparent": "small_symbol/svg/symbol_small_transparent.svg",
+    "png_native": [
+      "small_symbol/png/symbol-ink-16.png",
+      "small_symbol/png/symbol-ink-32.png",
+      "small_symbol/png/symbol-ink-48.png",
+      "small_symbol/png/symbol-transparent-16.png",
+      "small_symbol/png/symbol-transparent-32.png",
+      "small_symbol/png/symbol-transparent-48.png"
+    ]
+  },
+  "favicons": {
+    "svg": "favicons/favicon.svg",
+    "ico": "favicons/favicon.ico",
+    "apple_touch": "favicons/apple-touch-icon.png",
+    "icon_192": "favicons/icon-192.png",
+    "icon_512": "favicons/icon-512.png",
+    "maskable_512": "favicons/icon-maskable-512.png"
+  },
+  "outlined_wordmarks": {
+    "horizontal": "outlined_wordmark/horizontal_dark_outlined.svg",
+    "stacked": "outlined_wordmark/stacked_dark_outlined.svg",
+    "wordmark_only": "outlined_wordmark/wordmark_dark_outlined.svg"
+  },
+  "light_check": "light_check/horizontal_white_120px.png",
+  "font_used": {
+    "Destiny": "DejaVu Sans ExtraLight (Light-style; approximately weight 300)",
+    "Cloud": "DejaVu Sans Bold (weight 700)",
+    "note": "Outlined SVGs embed glyph outlines; recipients do not need fonts installed. These are explicit DejaVu Sans outlines, not Inter. Prior live-text SVGs used Inter/Arial fallback."
+  },
+  "palette": {
+    "Ember": "#FF7A3D",
+    "Gold": "#F5C46B",
+    "Ink": "#0B0D10",
+    "Ivory": "#ECE9E2"
+  }
+}
