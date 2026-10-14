@@ -50,13 +50,13 @@ export default function App() {
 function Logo() {
   return (
     <a href="#top" className="logo" aria-label="Destiny Cloud, home">
-      {/* Symbol from the brand package (brand/assets/SVG): ember horizon arc over an ivory baseline.
-          Non-scaling strokes keep the lines crisp at nav size. */}
-      <svg viewBox="-4 40 224 52" aria-hidden="true">
-        <path d="M 18 82 Q 108 8 198 82" fill="none" stroke="var(--ember)" strokeWidth="2.2" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-        <path d="M 0 88 H 216" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      {/* Symbol from the brand package (brand/assets/vectors_svg/symbol_transparent.svg), paths copied exactly:
+          the arc and baseline are hand-shaped and tapered on purpose, so never normalise them into strokes. */}
+      <svg viewBox="-2 0 220 54" aria-hidden="true">
+        <path d="M 9,42 C 30,27 57,9 91,5 C 126,0 159,13 190,34 C 197,38 203,41 208,43 C 201,39 195,35 187,31 C 158,14 130,4 99,7 C 66,10 35,26 9,42 Z" fill="var(--ember)" />
+        <path d="M 0,50 C 18,48.5 42,48.6 68,48.9 C 112,49.3 166,49.4 216,50 C 164,50.9 112,51.1 68,51 C 39,50.9 17,51.5 2,52 C -1,52 -1.5,50.7 0,50 Z" fill="currentColor" />
       </svg>
-      <span>Destiny<b>Cloud</b></span>
+      <span>Destiny <b>Cloud</b></span>
     </a>
   )
 }

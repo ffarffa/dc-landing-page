@@ -1,0 +1,29 @@
+{
+  "brand": "Destiny Cloud",
+  "selected_concept": "08",
+  "description": "Minimal horizon logo with hand-shaped asymmetric tapered orange arc and organic baseline.",
+  "palette": {
+    "ember": "#FF7A3D",
+    "gold": "#F5C46B",
+    "ink": "#0B0D10",
+    "ivory": "#ECE9E2"
+  },
+  "primary_assets": {
+    "horizontal_dark": "vectors_svg/horizontal_dark_colour.svg",
+    "horizontal_light": "vectors_svg/horizontal_light_colour.svg",
+    "horizontal_transparent": "vectors_svg/horizontal_transparent.svg",
+    "symbol_transparent": "vectors_svg/symbol_transparent.svg",
+    "app_icon": "app_icons/app_icon_orange.png",
+    "favicon": "favicons/favicon.svg",
+    "reference_board": "ai_reference/destiny_cloud_brand_reference.png"
+  },
+  "usage_rules": [
+    "Read this manifest before using assets.",
+    "Use SVG masters for scalable production.",
+    "Use PNG for raster assets with transparency; JPG is flattened.",
+    "Preserve the intentionally imperfect tapered arc and uneven baseline; do not replace them with a perfect semicircle or uniform stroke.",
+    "Do not add cloud clip-art, glow, 3D, shadows, textures, or taglines.",
+    "Use dark variant on Ink and light variant on white.",
+    "SVG wordmark uses Inter/Arial fallback; outline text in a vector editor after confirming font."
+  ]
+}

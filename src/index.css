@@ -101,8 +101,8 @@ em { font-style: italic; }
 .nav nav a:hover { color: var(--text); }
 
 .logo { display: inline-flex; align-items: center; gap: 12px; font-size: 18px; letter-spacing: -0.02em; color: var(--text); }
-.logo svg { width: 46px; height: 11px; overflow: visible; }
-.logo b { font-weight: 600; }
+.logo svg { width: 64px; height: 16px; overflow: visible; }
+.logo b { font-weight: 650; }
 .logo span { font-weight: 300; }
 
 /* ---------- Hero ---------- */
