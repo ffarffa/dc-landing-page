@@ -1,5 +1,6 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import HeroVisual from './hero/HeroVisual.tsx'
+import { surgeLog, type LogLine } from './hero/surgeLog.ts'
 import Arrow from './sections/Arrow.tsx'
 import ServicesLayouts from './sections/ServicesLayouts.tsx'
 import UseCaseLayouts from './sections/UseCaseLayouts.tsx'
@@ -83,59 +84,47 @@ function Nav() {
   )
 }
 
-// Hero log: a flash-sale surge hitting production. Lines stream in faster as traffic climbs, the window keeps the
-// newest ones, and the bar shows the live request rate. `ms` is the pause before the next line.
-type LogLine = { t: string; k: 'info' | 'rps' | 'warn' | 'act' | 'safe' | 'done'; s: string; ms: number; rps?: number }
-const surgeLog: LogLine[] = [
-  { t: '19:59:58', k: 'info', s: 'flash sale opens in 2s', ms: 900 },
-  { t: '20:00:00', k: 'info', s: 'sale is LIVE', ms: 700 },
-  { t: '20:00:01', k: 'rps', s: 'rps     1,204   p99  38ms', ms: 520, rps: 1204 },
-  { t: '20:00:02', k: 'rps', s: 'rps     9,870   p99  41ms', ms: 420, rps: 9870 },
-  { t: '20:00:03', k: 'rps', s: 'rps    31,442   p99  63ms', ms: 340, rps: 31442 },
-  { t: '20:00:03', k: 'warn', s: 'WARN  cpu 91% · queue 18k', ms: 300 },
-  { t: '20:00:03', k: 'act', s: 'scale  api   6 → 24 pods', ms: 260 },
-  { t: '20:00:04', k: 'act', s: 'scale  db    +2 read replicas', ms: 240 },
-  { t: '20:00:04', k: 'rps', s: 'rps    52,915   p99  44ms', ms: 220, rps: 52915 },
-  { t: '20:00:05', k: 'info', s: 'pool   2,048 conns · 0 waiting', ms: 200 },
-  { t: '20:00:05', k: 'rps', s: 'rps    71,388   p99  45ms', ms: 180, rps: 71388 },
-  { t: '20:00:06', k: 'info', s: 'cache  hit ratio 97.3%', ms: 170 },
-  { t: '20:00:06', k: 'rps', s: 'rps    96,020   p99  46ms', ms: 170, rps: 96020 },
-  { t: '20:00:07', k: 'warn', s: 'WARN  zone-a saturating', ms: 200 },
-  { t: '20:00:07', k: 'act', s: 'route  40% → zone-b', ms: 240 },
-  { t: '20:00:08', k: 'rps', s: 'rps   124,617   p99  47ms', ms: 320, rps: 124617 },
-  { t: '20:00:09', k: 'warn', s: 'ALERT bot flood · 3 networks', ms: 260 },
-  { t: '20:00:09', k: 'warn', s: 'ALERT login stuffing · 9k/s', ms: 240 },
-  { t: '20:00:09', k: 'act', s: 'waf    challenge + rate limit', ms: 240 },
-  { t: '20:00:10', k: 'act', s: 'block  212,480 bad requests', ms: 320 },
-  { t: '20:00:10', k: 'safe', s: 'THREAT AVERTED · 0 buyers hit', ms: 700 },
-  { t: '20:00:11', k: 'info', s: 'orders 38,190 / min', ms: 420 },
-  { t: '20:00:12', k: 'rps', s: 'rps   126,301   p99  46ms', ms: 520, rps: 126301 },
-  { t: '20:00:14', k: 'info', s: 'errors 0 · dropped 0', ms: 900 },
-  { t: '', k: 'done', s: '✓ 126k req/s held. attack shrugged off.', ms: 12000 },
-]
+// Hero log: an endless stream of production incidents (src/hero/surgeLog.ts), newest lines at the bottom. Only the
+// visible rows are kept, and the stream pauses while the hero is off screen or the tab is hidden.
 const LOG_ROWS = 12
+type Shown = LogLine & { id: number }
 
 function Terminal() {
   const reduce = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const [n, setN] = useState(reduce ? surgeLog.length : 0)
+  const box = useRef<HTMLDivElement>(null)
+  const [lines, setLines] = useState<Shown[]>(() => {
+    if (!reduce) return []
+    const g = surgeLog() // reduced motion: show the first incident, finished, and stop
+    const out: Shown[] = []
+    for (let i = 0; out.at(-1)?.k !== 'done'; i++) out.push({ ...g.next().value, id: i })
+    return out.slice(-LOG_ROWS)
+  })
   useEffect(() => {
     if (reduce) return
-    const id = window.setTimeout(() => setN((v) => (v >= surgeLog.length ? 0 : v + 1)), n === 0 ? 600 : surgeLog[n - 1].ms)
-    return () => window.clearTimeout(id)
-  }, [n, reduce])
-  const shown = surgeLog.slice(0, n)
-  const rps = [...shown].reverse().find((l) => l.rps)?.rps ?? 0
-  const hot = rps > 50000
+    const g = surgeLog()
+    let id = 0, timer = 0, onScreen = true
+    const tick = () => {
+      if (!onScreen || document.hidden) { timer = window.setTimeout(tick, 800); return }
+      const l = g.next().value
+      setLines((prev) => [...prev.slice(-(LOG_ROWS - 1)), { ...l, id: id++ }])
+      timer = window.setTimeout(tick, l.ms)
+    }
+    const io = new IntersectionObserver(([e]) => { onScreen = e.isIntersecting })
+    if (box.current) io.observe(box.current)
+    timer = window.setTimeout(tick, 600)
+    return () => { window.clearTimeout(timer); io.disconnect() }
+  }, [reduce])
+  const rps = [...lines].reverse().find((l) => l.rps)?.rps ?? 0
   return (
-    <div className="term surge" aria-hidden="true">
+    <div className="term surge" aria-hidden="true" ref={box}>
       <div className="term-bar">
         <i /><i /><i />
         <span>prod · live traffic</span>
-        <b className={`term-rps ${hot ? 'hot' : ''}`}><em />{rps.toLocaleString('en-US')} req/s</b>
+        <b className={`term-rps ${rps > 50000 ? 'hot' : ''}`}><em />{rps.toLocaleString('en-US')} req/s</b>
       </div>
       <pre>
-        {shown.slice(-LOG_ROWS).map((l, i, a) => (
-          <span key={n - a.length + i} className={`ln ${l.k}`}>
+        {lines.map((l) => (
+          <span key={l.id} className={`ln ${l.k}`}>
             {l.t && <small>{l.t} </small>}{l.s}{'\n'}
           </span>
         ))}
