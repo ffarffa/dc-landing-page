@@ -3,7 +3,7 @@ import HeroVisual from './hero/HeroVisual.tsx'
 import Arrow from './sections/Arrow.tsx'
 import ServicesLayouts from './sections/ServicesLayouts.tsx'
 import UseCaseLayouts from './sections/UseCaseLayouts.tsx'
-import { CONTACT_EMAIL, LEGAL_NAME, SSM_NO, audiences, engagements, principles, stack, steps } from './content'
+import { CONTACT_EMAIL, LEGAL_NAME, SSM_NO, audiences, principles, stack } from './content'
 
 const year = new Date().getFullYear()
 const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Project enquiry')}`
@@ -41,8 +41,6 @@ export default function App() {
         <Audiences />
         <Services />
         <UseCases />
-        <Process />
-        <Engagements />
         <Principles />
         <Contact />
       </main>
@@ -78,9 +76,7 @@ function Nav() {
         <nav aria-label="Main">
           <a href="#services">Services</a>
           <a href="#use-cases">Use cases</a>
-          <a href="#process">Process</a>
-          <a href="#engagements">Engagements</a>
-                  </nav>
+        </nav>
         <a className="btn btn-small" href="#contact">Talk to us</a>
       </div>
     </header>
@@ -143,13 +139,13 @@ function Hero() {
       </div>
       <div className="wrap hero-grid">
         <div className="hero-copy">
-          <p className="eyebrow" data-reveal>Cloud · Servers · Databases · DevOps</p>
+          <p className="eyebrow" data-reveal>Architecture · Software · Cloud · DevOps</p>
           <h1 data-reveal>
             Infrastructure that <em>holds its course.</em>
           </h1>
           <p className="lede" data-reveal>
-            Destiny Cloud designs, builds and runs enterprise infrastructure — cloud platforms, servers,
-            databases and the automation between them. One team from the first diagram to the 3 a.m. page.
+            Destiny Cloud is a software engineering and cloud architecture consultancy. We design, build and
+            improve secure, scalable enterprise software, from the first architecture diagram to production.
           </p>
           <div className="cta-row" data-reveal>
             <a className="btn" href="#contact">Start a project <Arrow /></a>
@@ -239,57 +235,11 @@ function Services() {
   )
 }
 
-function Process() {
-  return (
-    <section className="section" id="process">
-      <div className="wrap">
-        <SectionHead num="04" kicker="Process" title={<>No surprises, <em>by design.</em></>}>
-          Four steps, written down and agreed with you before anything touches production.
-        </SectionHead>
-        <ol className="steps">
-          {steps.map((s, i) => (
-            <li key={s.title} data-reveal style={{ transitionDelay: `${i * 90}ms` }}>
-              <span className="step-dot">{i + 1}</span>
-              <h3>{s.title}</h3>
-              <p>{s.body}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  )
-}
-
-function Engagements() {
-  return (
-    <section className="section alt" id="engagements">
-      <div className="wrap">
-        <SectionHead num="05" kicker="Engagements" title={<>Work with us <em>your way.</em></>}>
-          Start with a project, keep us on to run it, or bring us in to review what your team builds.
-        </SectionHead>
-        <div className="plans">
-          {engagements.map((e, i) => (
-            <article key={e.name} className={`plan ${e.featured ? 'featured' : ''}`} data-reveal style={{ transitionDelay: `${i * 80}ms` }}>
-              {e.featured && <span className="badge">Recommended</span>}
-              <h3>{e.name}</h3>
-              <p className="plan-lead">{e.lead}</p>
-              <ul>
-                {e.points.map((p) => <li key={p}><Check />{p}</li>)}
-              </ul>
-              <a className={`btn ${e.featured ? '' : 'btn-ghost'}`} href="#contact">Discuss {e.name.toLowerCase()} work</a>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 function Principles() {
   return (
     <section className="section alt" id="principles">
       <div className="wrap principles">
-        <SectionHead num="06" kicker="Principles" title={<>How we keep systems <em>boring</em> — in the best way.</>} />
+        <SectionHead num="04" kicker="Principles" title={<>How we keep systems <em>boring</em> — in the best way.</>} />
         <dl>
           {principles.map((p, i) => (
             <div key={p.k} data-reveal style={{ transitionDelay: `${i * 70}ms` }}>
@@ -307,7 +257,7 @@ function Contact() {
   return (
     <section className="contact" id="contact">
       <div className="wrap contact-inner" data-reveal>
-        <p className="mono-label"><span className="num">07</span> Contact</p>
+        <p className="mono-label"><span className="num">05</span> Contact</p>
         <h2>Tell us what you’re <em>running.</em></h2>
         <p className="section-sub">
           A short note about your systems and what is getting in the way is enough. We will come back to you with next steps.
@@ -332,14 +282,5 @@ function Footer() {
         <a href="#top">Back to top ↑</a>
       </div>
     </footer>
-  )
-}
-
-
-function Check() {
-  return (
-    <svg className="check" viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   )
 }
