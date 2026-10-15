@@ -1,0 +1,52 @@
+[
+ {
+  "key": "01-editorial",
+  "title": "Editorial",
+  "note": "Instrument Serif italic + Inter Tight. Echoes the website hero type; premium, human."
+ },
+ {
+  "key": "02-observatory",
+  "title": "Observatory",
+  "note": "Wide-tracked caps under a centred symbol. Calm, architectural, enterprise."
+ },
+ {
+  "key": "03-domain",
+  "title": "Domain",
+  "note": "JetBrains Mono, the name as an address: destiny.cloud. Speaks to engineers."
+ },
+ {
+  "key": "04-soft",
+  "title": "Soft lowercase",
+  "note": "Sora, all lowercase, \"cloud\" in Ember. Friendly, modern SaaS."
+ },
+ {
+  "key": "05-stack",
+  "title": "Two-line stack",
+  "note": "Space Grotesk on two lines beside a hairline rule. Compact, technical, great for headers."
+ },
+ {
+  "key": "06-dawn",
+  "title": "Dawn",
+  "note": "The name sits under the arc, on the horizon line: the sun rises over the brand. An emblem."
+ },
+ {
+  "key": "07-heritage",
+  "title": "Heritage",
+  "note": "Fraunces serif, centred under the symbol. Established, trustworthy, a firm not a startup."
+ },
+ {
+  "key": "08-industrial",
+  "title": "Industrial",
+  "note": "Oswald condensed caps, heavy DESTINY + light CLOUD. Infrastructure, strength, data centres."
+ },
+ {
+  "key": "09-tittle",
+  "title": "Tittle",
+  "note": "Manrope ExtraBold lowercase; the dot of the i is the arc. The mark lives inside the name."
+ },
+ {
+  "key": "10-badge",
+  "title": "Badge",
+  "note": "Symbol in a soft tile + Plus Jakarta Sans. App-ready lockup; the tile doubles as the favicon."
+ }
+]

@@ -1,0 +1,52 @@
+[
+ {
+  "key": "11-monument",
+  "title": "Monument",
+  "note": "SIZE: the symbol is the hero, three times the wordmark width; small tracked caps beneath. Signage, covers."
+ },
+ {
+  "key": "12-seed",
+  "title": "Seed",
+  "note": "SIZE: a tiny symbol rides above the D like a superscript; the wordmark carries the weight."
+ },
+ {
+  "key": "13-horizon-line",
+  "title": "Horizon line",
+  "note": "SIZE: the symbol stretches the full width of the name and sits underneath it, like the ground the name stands on."
+ },
+ {
+  "key": "14-eclipse",
+  "title": "Eclipse",
+  "note": "SIZE: a large arc rises behind the wordmark; the letters sit in front of the light. Bold, cinematic."
+ },
+ {
+  "key": "15-trailing-sun",
+  "title": "Trailing sun",
+  "note": "SIZE: the name comes first; a small sun rises from the end of \"Cloud\", its horizon continuing the baseline."
+ },
+ {
+  "key": "16-contrast",
+  "title": "Contrast",
+  "note": "Inter Tight Thin \"Destiny\" in Ember against ExtraBold \"Cloud\". The two halves of the name, two temperatures."
+ },
+ {
+  "key": "17-console",
+  "title": "Console",
+  "note": "JetBrains Mono caps in brackets, like a status line. Operator energy: we run your systems."
+ },
+ {
+  "key": "18-letterpress",
+  "title": "Letterpress",
+  "note": "Fraunces italic, all lowercase, centred under the symbol. Warm, crafted, quietly confident."
+ },
+ {
+  "key": "19-monogram",
+  "title": "Monogram",
+  "note": "A DC monogram under the symbol, with the full name set small to the right. Works as a seal or stamp."
+ },
+ {
+  "key": "20-poster",
+  "title": "Poster",
+  "note": "Oswald stacked caps, DESTINY over CLOUD at equal width, the symbol spanning the block. Bold and vertical."
+ }
+]

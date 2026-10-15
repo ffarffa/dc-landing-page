@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Destiny Cloud logo exploration</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 28px 24px 60px; background: #17191d; color: #e9e9ee; font: 15px/1.55 system-ui, -apple-system, sans-serif; }
+  header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; max-width: 1280px; margin: 0 auto 26px; }
+  h1 { font-size: 22px; margin: 0; } header p { margin: 4px 0 0; color: #9da2ac; }
+  .seg { display: inline-flex; border: 1px solid #2c3037; border-radius: 999px; padding: 3px; }
+  .seg button { all: unset; cursor: pointer; padding: 7px 14px; border-radius: 999px; color: #9da2ac; font-weight: 600; font-size: 13px; }
+  .seg button.on { background: #e9e9ee; color: #17191d; }
+  main { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  article { background: #1f2227; border: 1px solid #2a2e35; border-radius: 14px; overflow: hidden; }
+  article img { display: block; width: 100%; height: 220px; object-fit: contain; background: var(--bg); }
+  article div { padding: 14px 16px 16px; }
+  h2 { margin: 0; font-size: 16px; } h2 span { color: #ff7a3d; margin-right: 8px; font-variant-numeric: tabular-nums; }
+  article p { margin: 4px 0 0; color: #9da2ac; font-size: 14px; }
+  .sec { max-width: 1280px; margin: 30px auto 14px; font-size: 15px; letter-spacing: .04em; text-transform: uppercase; color: #ff7a3d; }
+  .sec small { text-transform: none; letter-spacing: 0; color: #9da2ac; margin-left: 10px; font-weight: 400; }
+  .r1 { max-width: 1280px; margin: 40px auto 0; color: #9da2ac; } .r1 a { color: #e9e9ee; }
+  @media (max-width: 860px) { main { grid-template-columns: 1fr; } }
+</style></head><body>
+<header>
+  <div><h1>Destiny Cloud: 20 wordmark directions</h1><p>Each with the approved horizon symbol. All files are outlined SVG (no fonts needed).</p></div>
+  <div class="seg" role="radiogroup" aria-label="Background"><button class="on" data-t="dark">Dark</button><button data-t="light">Light</button></div>
+</header>
+<h3 class="sec">Monument refinements · 11a–11c <small>name spans the symbol exactly, edge to edge</small></h3>
+<main id="grid4"></main>
+<h3 class="sec">Round 2 · 01–10</h3>
+<main id="grid2"></main>
+<h3 class="sec">Round 3 · 11–20 <small>11–15 play with the symbol size</small></h3>
+<main id="grid3"></main>
+<p class="r1">Round 1 (symbol trace vs board): <a href="round1/">round1/</a></p>
+<script>
+  let theme = 'dark'; const rounds = { round4: [], round2: [], round3: [] };
+  const card = (dir, v, n) => `<article style="--bg:${theme === 'dark' ? '#0B0D10' : '#F3EFEA'}">
+      <img src="${dir}/${v.key}_${theme}.svg" alt="${v.title} logo, ${theme}">
+      <div><h2><span>${typeof n === 'string' ? n : String(n).padStart(2, '0')}</span>${v.title}</h2><p>${v.note}</p></div></article>`;
+  const draw = () => {
+    document.getElementById('grid4').innerHTML = rounds.round4.map((v, i) => card('round4', v, '11' + 'abc'[i])).join('');
+    document.getElementById('grid2').innerHTML = rounds.round2.map((v, i) => card('round2', v, i + 1)).join('');
+    document.getElementById('grid3').innerHTML = rounds.round3.map((v, i) => card('round3', v, i + 11)).join('');
+  };
+  Promise.all(Object.keys(rounds).map(r => fetch(r + '/variants.json').then(x => x.json()).then(v => rounds[r] = v))).then(draw);
+  document.querySelectorAll('.seg button').forEach(b => b.onclick = () => {
+    document.querySelectorAll('.seg button').forEach(x => x.classList.toggle('on', x === b)); theme = b.dataset.t; draw() });
+</script>
+</body></html>

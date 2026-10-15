@@ -1,0 +1,17 @@
+[
+ {
+  "key": "11a-monument-classic",
+  "title": "Monument \u00b7 Classic",
+  "note": "Montserrat Medium, wide tracking (0.32em). Name spans the symbol edge to edge. Calm and architectural."
+ },
+ {
+  "key": "11b-monument-weighted",
+  "title": "Monument \u00b7 Weighted",
+  "note": "Montserrat Light + SemiBold, medium tracking (0.18em). Echoes the original Destiny/Cloud weight split."
+ },
+ {
+  "key": "11c-monument-bold",
+  "title": "Monument \u00b7 Bold",
+  "note": "Inter Tight SemiBold, tight tracking (0.06em) so the letters grow large. Confident, reads from far away."
+ }
+]

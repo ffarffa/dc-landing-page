@@ -47,16 +47,14 @@ export default function App() {
   )
 }
 
-function Logo() {
+// Monument Classic (brand/logo-v2/round4/11a-monument-classic_*.svg). Both files are outlined vectors built from that
+// master: the stacked Monument for the footer, and a horizontal version of the same symbol and caps for the nav.
+function Logo({ stacked = false }: { stacked?: boolean }) {
   return (
-    <a href="#top" className="logo" aria-label="Destiny Cloud, home">
-      {/* Symbol from the brand package (brand/assets/vectors_svg/symbol_transparent.svg), paths copied exactly:
-          the arc and baseline are hand-shaped and tapered on purpose, so never normalise them into strokes. */}
-      <svg viewBox="-2 0 220 54" aria-hidden="true">
-        <path d="M 9,42 C 30,27 57,9 91,5 C 126,0 159,13 190,34 C 197,38 203,41 208,43 C 201,39 195,35 187,31 C 158,14 130,4 99,7 C 66,10 35,26 9,42 Z" fill="var(--ember)" />
-        <path d="M 0,50 C 18,48.5 42,48.6 68,48.9 C 112,49.3 166,49.4 216,50 C 164,50.9 112,51.1 68,51 C 39,50.9 17,51.5 2,52 C -1,52 -1.5,50.7 0,50 Z" fill="currentColor" />
-      </svg>
-      <span>Destiny <b>Cloud</b></span>
+    <a href="#top" className={`logo ${stacked ? 'logo-stacked' : ''}`}>
+      {stacked
+        ? <img src="/logo-monument.svg" alt="Destiny Cloud" width="633" height="213" />
+        : <img src="/logo-nav.svg" alt="Destiny Cloud" width="948" height="60" />}
     </a>
   )
 }
@@ -363,7 +361,7 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="wrap footer-inner">
-        <Logo />
+        <Logo stacked />
         <div className="legal">
           <p>© {year} {LEGAL_NAME} <span className="regno">({SSM_NO})</span></p>
           <p>Registered in Malaysia under the Registration of Businesses Act 1956 · <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>

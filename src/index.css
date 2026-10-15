@@ -100,10 +100,9 @@ em { font-style: italic; }
 .nav nav a { font-size: 14px; color: var(--muted); transition: color 0.2s; }
 .nav nav a:hover { color: var(--text); }
 
-.logo { display: inline-flex; align-items: center; gap: 12px; font-size: 18px; letter-spacing: -0.02em; color: var(--text); }
-.logo svg { width: 64px; height: 16px; overflow: visible; }
-.logo b { font-weight: 650; }
-.logo span { font-weight: 300; }
+.logo { display: inline-flex; align-items: center; line-height: 0; }
+.logo img { display: block; width: 236px; height: auto; }
+.logo-stacked img { width: 190px; }
 
 /* ---------- Hero ---------- */
 .hero {
@@ -438,6 +437,8 @@ em { font-style: italic; }
   body { font-size: 16px; }
   .wrap { padding: 0 16px; }
   .nav nav { display: none; }
+  .logo img { width: 176px; }
+  .logo-stacked img { width: 170px; }
   .hero { padding: 104px 0 72px; }
   .cards { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; }
