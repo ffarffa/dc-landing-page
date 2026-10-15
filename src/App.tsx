@@ -139,7 +139,7 @@ const starField = (() => {
   let seed = 7
   const rnd = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646
   const out: { x: number; y: number; r: number; o: number; d: number; delay: number }[] = []
-  while (out.length < 90) {
+  while (out.length < 45) {
     const x = rnd() * 1200, y = rnd() * 560
     // keep the glow above the horizon clear: skip the band just over the planet's edge
     if (y > 380 && Math.abs(x - 600) < 520 - (560 - y) * 0.6) continue
