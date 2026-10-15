@@ -83,38 +83,61 @@ function Nav() {
   )
 }
 
-const deployLog: { t: string; cls?: string }[] = [
-  { t: '$ terraform apply -auto-approve', cls: 'cmd' },
-  { t: '  + network.core          created', cls: 'ok' },
-  { t: '  + cluster.app (3 nodes)  created', cls: 'ok' },
-  { t: '  + db.primary  postgres   created', cls: 'ok' },
-  { t: '  + db.replica  postgres   streaming', cls: 'ok' },
-  { t: '$ ./deploy --env production', cls: 'cmd' },
-  { t: '  health checks          12/12 passing', cls: 'ok' },
-  { t: '  rollback point         saved', cls: 'dim' },
-  { t: '  backups                verified 03:00', cls: 'dim' },
-  { t: '✓ live. nothing to page anyone about.', cls: 'done' },
+// Hero log: a flash-sale surge hitting production. Lines stream in faster as traffic climbs, the window keeps the
+// newest ones, and the bar shows the live request rate. `ms` is the pause before the next line.
+type LogLine = { t: string; k: 'info' | 'rps' | 'warn' | 'act' | 'safe' | 'done'; s: string; ms: number; rps?: number }
+const surgeLog: LogLine[] = [
+  { t: '19:59:58', k: 'info', s: 'flash sale opens in 2s', ms: 900 },
+  { t: '20:00:00', k: 'info', s: 'sale is LIVE', ms: 700 },
+  { t: '20:00:01', k: 'rps', s: 'rps     1,204   p99  38ms', ms: 520, rps: 1204 },
+  { t: '20:00:02', k: 'rps', s: 'rps     9,870   p99  41ms', ms: 420, rps: 9870 },
+  { t: '20:00:03', k: 'rps', s: 'rps    31,442   p99  63ms', ms: 340, rps: 31442 },
+  { t: '20:00:03', k: 'warn', s: 'WARN  cpu 91% · queue 18k', ms: 300 },
+  { t: '20:00:03', k: 'act', s: 'scale  api   6 → 24 pods', ms: 260 },
+  { t: '20:00:04', k: 'act', s: 'scale  db    +2 read replicas', ms: 240 },
+  { t: '20:00:04', k: 'rps', s: 'rps    52,915   p99  44ms', ms: 220, rps: 52915 },
+  { t: '20:00:05', k: 'info', s: 'pool   2,048 conns · 0 waiting', ms: 200 },
+  { t: '20:00:05', k: 'rps', s: 'rps    71,388   p99  45ms', ms: 180, rps: 71388 },
+  { t: '20:00:06', k: 'info', s: 'cache  hit ratio 97.3%', ms: 170 },
+  { t: '20:00:06', k: 'rps', s: 'rps    96,020   p99  46ms', ms: 170, rps: 96020 },
+  { t: '20:00:07', k: 'warn', s: 'WARN  zone-a saturating', ms: 200 },
+  { t: '20:00:07', k: 'act', s: 'route  40% → zone-b', ms: 240 },
+  { t: '20:00:08', k: 'rps', s: 'rps   124,617   p99  47ms', ms: 320, rps: 124617 },
+  { t: '20:00:09', k: 'warn', s: 'ALERT bot flood · 3 networks', ms: 260 },
+  { t: '20:00:09', k: 'warn', s: 'ALERT login stuffing · 9k/s', ms: 240 },
+  { t: '20:00:09', k: 'act', s: 'waf    challenge + rate limit', ms: 240 },
+  { t: '20:00:10', k: 'act', s: 'block  212,480 bad requests', ms: 320 },
+  { t: '20:00:10', k: 'safe', s: 'THREAT AVERTED · 0 buyers hit', ms: 700 },
+  { t: '20:00:11', k: 'info', s: 'orders 38,190 / min', ms: 420 },
+  { t: '20:00:12', k: 'rps', s: 'rps   126,301   p99  46ms', ms: 520, rps: 126301 },
+  { t: '20:00:14', k: 'info', s: 'errors 0 · dropped 0', ms: 900 },
+  { t: '', k: 'done', s: '✓ 126k req/s held. attack shrugged off.', ms: 4200 },
 ]
+const LOG_ROWS = 12
 
 function Terminal() {
   const reduce = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const [n, setN] = useState(reduce ? deployLog.length : 0)
+  const [n, setN] = useState(reduce ? surgeLog.length : 0)
   useEffect(() => {
     if (reduce) return
-    const id = window.setInterval(() => {
-      setN((v) => (v >= deployLog.length + 6 ? 0 : v + 1))
-    }, 520)
-    return () => window.clearInterval(id)
-  }, [reduce])
+    const id = window.setTimeout(() => setN((v) => (v >= surgeLog.length ? 0 : v + 1)), n === 0 ? 600 : surgeLog[n - 1].ms)
+    return () => window.clearTimeout(id)
+  }, [n, reduce])
+  const shown = surgeLog.slice(0, n)
+  const rps = [...shown].reverse().find((l) => l.rps)?.rps ?? 0
+  const hot = rps > 50000
   return (
-    <div className="term" aria-hidden="true">
+    <div className="term surge" aria-hidden="true">
       <div className="term-bar">
         <i /><i /><i />
-        <span>ops@destiny ~ production</span>
+        <span>prod · live traffic</span>
+        <b className={`term-rps ${hot ? 'hot' : ''}`}><em />{rps.toLocaleString('en-US')} req/s</b>
       </div>
       <pre>
-        {deployLog.map((l, i) => (
-          <span key={i} className={`${l.cls ?? ''} ${i < n ? 'show' : ''}`}>{l.t}{'\n'}</span>
+        {shown.slice(-LOG_ROWS).map((l, i, a) => (
+          <span key={n - a.length + i} className={`ln ${l.k}`}>
+            {l.t && <small>{l.t} </small>}{l.s}{'\n'}
+          </span>
         ))}
         <span className="caret">▍</span>
       </pre>

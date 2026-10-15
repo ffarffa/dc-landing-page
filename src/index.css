@@ -230,6 +230,23 @@ em { font-style: italic; }
 .term .ok { color: #b7bdc6; }
 .term .dim { color: var(--faint); }
 .term .done { color: var(--gold); }
+/* surge log: every line is mounted fresh, so it animates in instead of waiting for .show */
+.surge pre { min-height: 0; height: 330px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; white-space: pre; }
+.surge pre span.ln { opacity: 1; display: block; animation: ln-in 0.22s ease-out; color: #b7bdc6; }
+.surge .ln small { font-size: inherit; color: var(--faint); }
+.surge .ln.info { color: var(--muted); }
+.surge .ln.rps { color: var(--text); }
+.surge .ln.warn { color: var(--ember); text-shadow: 0 0 12px hsl(var(--h) var(--s) 60% / 0.55); }
+.surge .ln.act { color: #7ddc9a; }
+.surge .ln.safe { color: #7ddc9a; font-weight: 700; letter-spacing: 0.02em; text-shadow: 0 0 14px rgba(125, 220, 154, 0.55); animation: ln-in 0.22s ease-out, safe-pulse 1.4s ease-in-out 0.2s 2; }
+@keyframes safe-pulse { 50% { text-shadow: 0 0 22px rgba(125, 220, 154, 0.95); } }
+.surge .ln.done { color: var(--gold); margin-top: 6px; }
+.surge pre .caret { display: block; }
+@keyframes ln-in { from { opacity: 0; transform: translateY(6px); } }
+.term-rps { margin-left: auto; display: inline-flex; align-items: center; gap: 7px; font: 500 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.term-rps em { width: 7px; height: 7px; border-radius: 50%; background: #7ddc9a; box-shadow: 0 0 8px #7ddc9a; animation: blink 1.2s steps(1) infinite; }
+.term-rps.hot { color: var(--ember); }
+.term-rps.hot em { background: var(--ember); box-shadow: 0 0 10px var(--ember); animation-duration: 0.4s; }
 .term .caret { opacity: 1; color: var(--ember); animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
@@ -463,6 +480,7 @@ em { font-style: italic; }
   .principles dl > div { grid-template-columns: 1fr; gap: 6px; }
   .footer-inner { flex-direction: column; text-align: center; }
   .term pre { font-size: 11.5px; min-height: 290px; padding: 16px; }
+  .surge pre { height: 290px; font-size: 11px; }
   .btn-lg { padding: 16px 22px; }
 }
 
