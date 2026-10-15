@@ -111,7 +111,7 @@ const surgeLog: LogLine[] = [
   { t: '20:00:11', k: 'info', s: 'orders 38,190 / min', ms: 420 },
   { t: '20:00:12', k: 'rps', s: 'rps   126,301   p99  46ms', ms: 520, rps: 126301 },
   { t: '20:00:14', k: 'info', s: 'errors 0 · dropped 0', ms: 900 },
-  { t: '', k: 'done', s: '✓ 126k req/s held. attack shrugged off.', ms: 4200 },
+  { t: '', k: 'done', s: '✓ 126k req/s held. attack shrugged off.', ms: 12000 },
 ]
 const LOG_ROWS = 12
 
