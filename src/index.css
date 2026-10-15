@@ -137,6 +137,11 @@ em { font-style: italic; }
 .orbits ellipse { fill: none; stroke: rgba(236, 233, 226, 0.07); stroke-width: 1; }
 .orbits ellipse:nth-child(2) { stroke-dasharray: 2 8; }
 .orbits .sat { fill: var(--gold); filter: drop-shadow(0 0 6px var(--gold)); }
+.orbits .sat-ember { fill: var(--ember); filter: drop-shadow(0 0 5px var(--ember)); }
+.orbits .sat-pale circle { fill: hsl(var(--bh) 30% 78%); filter: drop-shadow(0 0 5px hsl(var(--bh) 40% 70% / 0.6)); }
+.orbits .sat-pale ellipse { fill: none; stroke: hsl(var(--bh) 30% 82% / 0.55); stroke-width: 0.9; }
+.orbits .star { fill: #fff; animation: star-twinkle ease-in-out infinite alternate; }
+@keyframes star-twinkle { to { opacity: 0.08; } }
 .horizon {
   position: absolute;
   left: 50%;

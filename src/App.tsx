@@ -122,6 +122,21 @@ function Terminal() {
   )
 }
 
+// Stars for the dark sky above the horizon: seeded so they sit in the same place on every load.
+const starField = (() => {
+  let seed = 7
+  const rnd = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646
+  const out: { x: number; y: number; r: number; o: number; d: number; delay: number }[] = []
+  while (out.length < 90) {
+    const x = rnd() * 1200, y = rnd() * 560
+    // keep the glow above the horizon clear: skip the band just over the planet's edge
+    if (y > 380 && Math.abs(x - 600) < 520 - (560 - y) * 0.6) continue
+    const big = rnd() > 0.88
+    out.push({ x, y, r: big ? 1.3 + rnd() * 0.6 : 0.5 + rnd() * 0.6, o: 0.25 + rnd() * 0.6, d: 3 + rnd() * 6, delay: rnd() * 9 })
+  }
+  return out
+})()
+
 function Hero() {
   return (
     <section className="hero" id="top">
@@ -131,9 +146,22 @@ function Hero() {
           <ellipse cx="600" cy="760" rx="700" ry="330" />
           <ellipse cx="600" cy="760" rx="880" ry="440" />
           <ellipse cx="600" cy="760" rx="1080" ry="560" />
+          {starField.map((st, i) => (
+            <circle key={i} className="star" cx={st.x} cy={st.y} r={st.r}
+              style={{ opacity: st.o, animationDuration: `${st.d}s`, animationDelay: `-${st.delay}s` }} />
+          ))}
+          {/* three planets: different orbits, speeds, directions and starting points so they never line up */}
           <circle className="sat" r="4" cx="0" cy="0">
             <animateMotion dur="38s" repeatCount="indefinite" path="M -100 760 A 700 330 0 0 1 1300 760" />
           </circle>
+          <circle className="sat sat-ember" r="2.6" cx="0" cy="0">
+            <animateMotion dur="57s" begin="-21s" repeatCount="indefinite" path="M 1480 760 A 880 440 0 0 0 -280 760" />
+          </circle>
+          <g className="sat-pale">
+            <circle r="6" cx="0" cy="0" />
+            <ellipse rx="11" ry="2.6" cx="0" cy="0" transform="rotate(-18)" />
+            <animateMotion dur="83s" begin="-58s" repeatCount="indefinite" path="M -480 760 A 1080 560 0 0 1 1680 760" />
+          </g>
         </svg>
         <div className="horizon" />
       </div>
