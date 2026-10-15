@@ -1,5 +1,9 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { CONTACT_EMAIL, LEGAL_NAME, SSM_NO, audiences, engagements, principles, services, stack, steps, useCases, type IconName } from './content'
+import HeroVisual from './hero/HeroVisual.tsx'
+import Arrow from './sections/Arrow.tsx'
+import ServicesLayouts from './sections/ServicesLayouts.tsx'
+import UseCaseLayouts from './sections/UseCaseLayouts.tsx'
+import { CONTACT_EMAIL, LEGAL_NAME, SSM_NO, audiences, engagements, principles, stack, steps } from './content'
 
 const year = new Date().getFullYear()
 const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Project enquiry')}`
@@ -153,7 +157,7 @@ function Hero() {
           </div>
         </div>
         <div className="hero-visual" data-reveal>
-          <Terminal />
+          <HeroVisual terminal={<Terminal />} />
         </div>
       </div>
     </section>
@@ -190,15 +194,16 @@ function Audiences() {
   return (
     <section className="section" id="who">
       <div className="wrap">
-        <SectionHead num="01" kicker="Who we help" title={<>Built for businesses that <em>run on software.</em></>}>
-          You do not need an infrastructure team. You need your systems to stay up, stay secure and keep up with growth.
+        <SectionHead num="01" kicker="Who we help" title={<>A technical partner for teams that <em>build on software.</em></>}>
+          For when you need experienced engineers to design, build or improve a system, without hiring a whole team for it.
         </SectionHead>
-        <div className="audiences">
+        <div className="who">
           {audiences.map((a, i) => (
-            <article key={a.who} className="audience" data-reveal style={{ transitionDelay: `${i * 80}ms` }}>
+            <article key={a.who} data-reveal style={{ transitionDelay: `${i * 90}ms` }}>
+              <p className="who-for">For <span>{['i', 'ii', 'iii'][i]}.</span></p>
               <h3>{a.who}</h3>
-              <p>{a.body}</p>
-              <p className="need"><span>They need</span>{a.need}</p>
+              <p className="who-body">{a.body}</p>
+              <p className="who-need"><Arrow />{a.need}</p>
             </article>
           ))}
         </div>
@@ -208,42 +213,13 @@ function Audiences() {
 }
 
 function UseCases() {
-  const [active, setActive] = useState(0)
-  const u = useCases[active]
   return (
     <section className="section" id="use-cases">
       <div className="wrap">
         <SectionHead num="03" kicker="Use cases" title={<>Problems we <em>solve.</em></>}>
           Recognise one of these? Each is a typical engagement: what we find, what we do, and what you get.
         </SectionHead>
-        <div className="uc" data-reveal>
-          <div className="uc-list" role="tablist" aria-label="Use cases">
-            {useCases.map((c, i) => (
-              <button
-                key={c.title}
-                role="tab"
-                id={`uc-tab-${i}`}
-                aria-selected={i === active}
-                aria-controls="uc-panel"
-                className={i === active ? 'on' : ''}
-                onClick={() => setActive(i)}
-              >
-                <span className="uc-sector">{c.sector}</span>
-                <span className="uc-title">{c.title}</span>
-              </button>
-            ))}
-          </div>
-          <div className="uc-panel" id="uc-panel" role="tabpanel" aria-labelledby={`uc-tab-${active}`} key={active}>
-            <p className="mono-label">{u.sector}</p>
-            <h3>{u.title}</h3>
-            <dl>
-              <div><dt>The problem</dt><dd>{u.problem}</dd></div>
-              <div><dt>What we do</dt><dd>{u.approach}</dd></div>
-              <div className="res"><dt>What you get</dt><dd>{u.result}</dd></div>
-            </dl>
-            <a className="btn" href="#contact">This sounds like us <Arrow /></a>
-          </div>
-        </div>
+        <UseCaseLayouts />
       </div>
     </section>
   )
@@ -253,24 +229,11 @@ function Services() {
   return (
     <section className="section alt" id="services">
       <div className="wrap">
-        <SectionHead num="02" kicker="Services" title={<>Everything under the application, <em>handled.</em></>}>
-          From a single database to a multi-region platform. Bring us the system you have, or the one you need.
+        <SectionHead num="02" kicker="Services" title={<>Architected for the cloud, <em>built to last.</em></>}>
+          From system design to the code, the cloud it runs on and the pipeline that ships it, on whichever
+          platform your business runs.
         </SectionHead>
-        <div className="cards">
-          {services.map((s, i) => (
-            <article className="card" key={s.title} data-reveal style={{ transitionDelay: `${(i % 3) * 80}ms` }}>
-              <div className="card-top">
-                <Icon name={s.icon} />
-                <span className="idx">0{i + 1}</span>
-              </div>
-              <h3>{s.title}</h3>
-              <p>{s.body}</p>
-              <ul className="tags">
-                {s.tags.map((t) => <li key={t}>{t}</li>)}
-              </ul>
-            </article>
-          ))}
-        </div>
+        <ServicesLayouts />
       </div>
     </section>
   )
@@ -372,60 +335,11 @@ function Footer() {
   )
 }
 
-function Arrow() {
-  return (
-    <svg className="arrow" viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
 
 function Check() {
   return (
     <svg className="check" viewBox="0 0 16 16" aria-hidden="true">
       <path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
-  )
-}
-
-const iconPaths: Record<IconName, ReactNode> = {
-  cloud: <path d="M7 18h10.5a4 4 0 0 0 .4-8A6 6 0 0 0 6.3 11 3.5 3.5 0 0 0 7 18z" />,
-  server: (
-    <>
-      <rect x="4" y="4" width="16" height="6.5" rx="1.5" />
-      <rect x="4" y="13.5" width="16" height="6.5" rx="1.5" />
-      <path d="M7.5 7.25h.01M7.5 16.75h.01M11 7.25h5M11 16.75h5" />
-    </>
-  ),
-  database: (
-    <>
-      <ellipse cx="12" cy="6" rx="7" ry="2.8" />
-      <path d="M5 6v12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8V6M5 12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8" />
-    </>
-  ),
-  pipeline: (
-    <>
-      <circle cx="6" cy="6" r="2.2" />
-      <circle cx="6" cy="18" r="2.2" />
-      <circle cx="18" cy="12" r="2.2" />
-      <path d="M6 8.2v7.6M8.2 6h3.3a4 4 0 0 1 4 4v0M8.2 18h3.3a4 4 0 0 0 4-4v0" />
-    </>
-  ),
-  shield: (
-    <>
-      <path d="M12 3.5l7 2.6v5.4c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6.1z" />
-      <path d="M9 12l2.2 2.2L15.5 10" />
-    </>
-  ),
-  code: <path d="M8.5 7L3.5 12l5 5M15.5 7l5 5-5 5M13.5 5l-3 14" />,
-}
-
-function Icon({ name }: { name: IconName }) {
-  return (
-    <span className="icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        {iconPaths[name]}
-      </svg>
-    </span>
   )
 }
